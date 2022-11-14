@@ -17,10 +17,10 @@ from crypto_wallet import w3, generate_account, get_balance
 # A single Ether is currently valued at (look up current value)
 
 we_shop_database = {
-    "Fundamentals": ["Fundamentals", .05],
-    "Rosie The Riviter": ["Rosie The Riviter", .06],
-    "RBG": ["RBG", .07],
-    "Codess": ["Codess", .08],
+    "Fundamentals": ["Fundamentals", .05, "https://images-na.ssl-images-amazon.com/images/I/71Zg2d9QG2S._AC_UX466_.jpg"],
+    "Rosie The Riviter": ["Rosie The Riviter", .06, "https://m.media-amazon.com/images/I/A13usaonutL._CLa%7C2140%2C2000%7C918Dsd9GtiL.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_UX679_.png"] ,
+    "RBG": ["RBG", .07, "https://i.etsystatic.com/36271525/r/il/d3b13d/4006850366/il_1588xN.4006850366_sys0.jpg"],
+    "Codess": ["Codess", .08, "https://res.cloudinary.com/teepublic/image/private/s--adJ33DFv--/t_Resized%20Artwork/c_crop,x_10,y_10/c_fit,h_576/c_crop,g_north_west,h_626,w_470,x_-39,y_-25/g_north_west,u_upload:v1462829024:production:blanks:a59x1cgomgu5lprfjlmi,x_-434,y_-350/b_rgb:eeeeee/c_limit,f_auto,h_630,q_90,w_630/v1589371695/production/designs/10105194_0.jpg"],
 }
 
 # Create a list of the shirt names/type
@@ -34,6 +34,7 @@ def get_shirts():
     for number in range(len(shirts)):
         st.write("Name: ", db_list[number][0])
         st.write("Price in Ether: ", db_list[number][1], "eth")
+        st.image(db_list[number][2])
         st.text(" \n")
 
 ################################################################################
@@ -42,6 +43,8 @@ def get_shirts():
 # Create Streamlit application headings using `st.markdown` to explain this app is for buying shirts
 st.markdown("# WE stand together for Women Empowerment #")
 st.markdown("## Buy a WE Tee! ##")
+st.write("All proceeds are donated to the NEEMA PROJECT. Click here to learn more https://www.neemaproject.org")
+
 st.text(" \n")
 
 #
