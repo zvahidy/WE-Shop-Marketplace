@@ -1,5 +1,6 @@
 # Imports
 import streamlit as st
+import sqlite3
 from dataclasses import dataclass
 from typing import Any, List
 
@@ -16,25 +17,36 @@ from crypto_wallet import w3, generate_account, get_balance
 # Database of Shirts including their name, digital address, rating and in Ether.
 # A single Ether is currently valued at (look up current value)
 
-we_shop_database = {
-    "Fundamentals": ["Fundamentals", .05, "https://images-na.ssl-images-amazon.com/images/I/71Zg2d9QG2S._AC_UX466_.jpg"],
-    "Rosie The Riviter": ["Rosie The Riviter", .06, "https://m.media-amazon.com/images/I/A13usaonutL._CLa%7C2140%2C2000%7C918Dsd9GtiL.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_UX679_.png"] ,
-    "RBG": ["RBG", .07, "https://i.etsystatic.com/36271525/r/il/d3b13d/4006850366/il_1588xN.4006850366_sys0.jpg"],
-    "Codess": ["Codess", .08, "https://res.cloudinary.com/teepublic/image/private/s--adJ33DFv--/t_Resized%20Artwork/c_crop,x_10,y_10/c_fit,h_576/c_crop,g_north_west,h_626,w_470,x_-39,y_-25/g_north_west,u_upload:v1462829024:production:blanks:a59x1cgomgu5lprfjlmi,x_-434,y_-350/b_rgb:eeeeee/c_limit,f_auto,h_630,q_90,w_630/v1589371695/production/designs/10105194_0.jpg"],
-}
+conn = sqlite3.connect('we1.db')
+engine = conn.cursor()
+
+select_all_data = """
+SELECT * FROM shop
+"""
+
+select_shirt_names = """
+  select shirt_name from shop
+"""
+
+
+engine.execute(select_all_data)
+we_shop_database = engine.fetchall()
 
 # Create a list of the shirt names/type
-shirts = ["Fundamentals", "Rosie The Riviter", "RBG", "Codess"]
+shirts = []
+for x in list(we_shop_database):
+  shirts.append(x[1])
+
 
 # Create a get_WE function to display the purchase information from the WE_database
 def get_shirts():
     """Display the database of cats to purchase information."""
-    db_list = list(we_shop_database.values())
+    db_list = we_shop_database
 
-    for number in range(len(shirts)):
-        st.write("Name: ", db_list[number][0])
-        st.write("Price in Ether: ", db_list[number][1], "eth")
-        st.image(db_list[number][2])
+    for number in range(len(db_list)):
+        st.write("Name: ", db_list[number][1])
+        st.write("Price in Ether: ", db_list[number][2], "eth")
+        st.image(db_list[number][3])
         st.text(" \n")
 
 ################################################################################
@@ -66,10 +78,14 @@ shirt = st.sidebar.selectbox('Select a Shirt', shirts)
 st.sidebar.markdown("## Shirt Name and Price")
 
 # Identify the Shirt for purchase by name
-shirt = we_shop_database[shirt][0]
+select_specific_shirt = "SELECT * FROM shop WHERE shirt_name = '{}'".format(shirt)
+engine.execute(select_specific_shirt)
+shirt_info = engine.fetchall()[0]
+
+#shirt = we_shop_database[shirt][1]
 
 # Create a variable called `Shirt_price` to retrive the cat price from the `WE_database` using block notation.
-shirt_price = we_shop_database[shirt][1]
+shirt_price = shirt_info[2]
 
 # Use a conditional statement using the `if` keyword to check if the selected Shirt can be purchased. This will be done by checking the user's account balance that wishes to make the purchase.
 if shirt_price <= ether:
@@ -80,4 +96,8 @@ if shirt_price <= ether:
 else:
   st.sidebar.write("With a balance of", ether, "ether, you can't buy", shirt, "for", shirt_price, "eth." )
   get_shirts()
+
+
+
+
 
