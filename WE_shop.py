@@ -49,6 +49,20 @@ def get_shirts():
         st.image(db_list[number][3])
         st.text(" \n")
 
+def purchase_item(item_info):
+  decrement_item_count = """
+  UPDATE shop
+  SET item_count=item_count-1
+  WHERE shirt_name='{}';
+  """.format(item_info[1])
+  if(item_info[4] <= 0):
+    st.write("Unable to purchase item")
+  else:
+    engine.execute(decrement_item_count)
+    conn.commit()
+    
+
+
 ################################################################################
 # Streamlit Code
 
@@ -82,6 +96,9 @@ select_specific_shirt = "SELECT * FROM shop WHERE shirt_name = '{}'".format(shir
 engine.execute(select_specific_shirt)
 shirt_info = engine.fetchall()[0]
 
+st.write(shirt_info)
+purchase_item(shirt_info)
+
 #shirt = we_shop_database[shirt][1]
 
 # Create a variable called `Shirt_price` to retrive the cat price from the `WE_database` using block notation.
@@ -96,6 +113,8 @@ if shirt_price <= ether:
 else:
   st.sidebar.write("With a balance of", ether, "ether, you can't buy", shirt, "for", shirt_price, "eth." )
   get_shirts()
+
+
 
 
 
