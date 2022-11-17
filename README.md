@@ -71,6 +71,8 @@ Below are the screenshots of the deployed smart contracts:
 
 ![](Images/kikecoin_contract.jpg)
 
+## Functionality Testing of the deployed contract
+
 ### Buying Tokens
 
 * You will need some ETH first. You can get it from Ganache.
