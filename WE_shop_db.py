@@ -1,13 +1,11 @@
-import sqlalchemy as sql
+import sqlite3
 import streamlit as st
 import math
 
-@st.experimental_singleton
-def init_db():
-	engine=sql.create_engine('sqlite:///shop.db')
-	return engine
+conn = sqlite3.connect('we1.db')
+engine = conn.cursor()
 
-def get_shirts(engine): 
+def get_shirts(): 
 	results=list(engine.execute('SELECT shirt_name, shirt_price, link FROM shop'))
 	max_columns=3
 	rows=math.ceil(len(results)/max_columns)
@@ -26,5 +24,4 @@ def get_shirts(engine):
 					break
 			
 
-engine=init_db()
-get_shirts(engine)
+get_shirts()
