@@ -88,6 +88,7 @@ st.sidebar.markdown("---------")
 # Create a select box to chose a Shirt using `st.sidebar.selectbox`
 shirt = st.sidebar.selectbox('Select a Shirt', shirts)
 
+
 #  Create a header using ` st.sidebar.markdown()` to display Shirt name and price.
 st.sidebar.markdown("## Shirt Name and Price")
 
@@ -97,7 +98,6 @@ engine.execute(select_specific_shirt)
 shirt_info = engine.fetchall()[0]
 
 st.write(shirt_info)
-purchase_item(shirt_info)
 
 #shirt = we_shop_database[shirt][1]
 
@@ -113,6 +113,13 @@ if shirt_price <= ether:
 else:
   st.sidebar.write("With a balance of", ether, "ether, you can't buy", shirt, "for", shirt_price, "eth." )
   get_shirts()
+
+purchase_button = st.sidebar.button("Purchase")
+if purchase_button:
+  purchase_item(shirt_info)
+
+
+
 
 
 
