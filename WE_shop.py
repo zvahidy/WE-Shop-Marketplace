@@ -68,7 +68,6 @@ contract = load_contract()
 accounts = w3.eth.accounts
 
 def purchase_item(item_info, from_address):
-  to_address = "0x6a7F0Cc12f30C905C3139395aC1Bbf7c294e9dcd"
   price_in_wei = w3.toWei(item_info[2], "ether")
   st.write(price_in_wei)
   decrement_item_count = """
@@ -85,7 +84,7 @@ def purchase_item(item_info, from_address):
         "from": from_address,
         'value': price_in_wei
     })
-    contract.functions.transfer(price_in_wei, to_address).transact({
+    contract.functions.transfer(price_in_wei, item_info[5]).transact({
         "from": from_address
     })
 ################################################################################
