@@ -3,9 +3,11 @@ import streamlit as st
 import sqlite3
 from dataclasses import dataclass
 from typing import Any, List
-
-
-
+from web3 import Web3
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+import json
 
 # From wallet.py import the functions w3, generate_account, get_balance
 
@@ -16,6 +18,8 @@ from crypto_wallet import w3, generate_account, get_balance
 
 # Database of Shirts including their name, digital address, rating and in Ether.
 # A single Ether is currently valued at (look up current value)
+load_dotenv()
+w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 
 conn = sqlite3.connect('we1.db')
 engine = conn.cursor()
@@ -49,7 +53,24 @@ def get_shirts():
         st.image(db_list[number][3])
         st.text(" \n")
 
-def purchase_item(item_info):
+@st.cache(allow_output_mutation=True)
+def load_contract():
+    with open(Path('./artifacts/Transaction_metadata.json')) as f:
+        artwork_abi = json.load(f)
+    contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
+    contract = w3.eth.contract(
+        address=contract_address,
+        abi=artwork_abi['output']['abi']
+    )
+    return contract
+
+contract = load_contract()
+accounts = w3.eth.accounts
+
+def purchase_item(item_info, from_address):
+  to_address = "0x6a7F0Cc12f30C905C3139395aC1Bbf7c294e9dcd"
+  price_in_wei = w3.toWei(item_info[2], "ether")
+  st.write(price_in_wei)
   decrement_item_count = """
   UPDATE shop
   SET item_count=item_count-1
@@ -60,9 +81,13 @@ def purchase_item(item_info):
   else:
     engine.execute(decrement_item_count)
     conn.commit()
-    
-
-
+    contract.functions.deposit().transact({
+        "from": from_address,
+        'value': price_in_wei
+    })
+    contract.functions.transfer(price_in_wei, to_address).transact({
+        "from": from_address
+    })
 ################################################################################
 # Streamlit Code
 
@@ -76,18 +101,19 @@ st.text(" \n")
 #
 #
 #  Call the `generate_account` function and save it as the variable `account`
-account = generate_account(w3)
+
+option = st.sidebar.selectbox('Which account would you like to pay with', options=accounts)    
 #  Call the `get_balance` function and save it as the variable `ether`
-ether = get_balance(w3, account.address)
+#ether = get_balance(w3, account.address)
 
 # Disply the balance of ether in the account
 st.sidebar.markdown("## Your Balance of Ether ##")
-st.sidebar.markdown(ether)
+#st.sidebar.markdown(ether)
 st.sidebar.markdown("---------")
 
 # Create a select box to chose a Shirt using `st.sidebar.selectbox`
 shirt = st.sidebar.selectbox('Select a Shirt', shirts)
-
+size = st.sidebar.selectbox ('Select a Size',['S','M','L'])
 
 #  Create a header using ` st.sidebar.markdown()` to display Shirt name and price.
 st.sidebar.markdown("## Shirt Name and Price")
@@ -97,26 +123,26 @@ select_specific_shirt = "SELECT * FROM shop WHERE shirt_name = '{}'".format(shir
 engine.execute(select_specific_shirt)
 shirt_info = engine.fetchall()[0]
 
-st.write(shirt_info)
-
 #shirt = we_shop_database[shirt][1]
 
 # Create a variable called `Shirt_price` to retrive the cat price from the `WE_database` using block notation.
 shirt_price = shirt_info[2]
 
 # Use a conditional statement using the `if` keyword to check if the selected Shirt can be purchased. This will be done by checking the user's account balance that wishes to make the purchase.
-if shirt_price <= ether:
-  new_balance = float(ether) - float(shirt_price)
+#if shirt_price <= ether:
+#  new_balance = float(ether) - float(shirt_price)
 # Write the Shirt name to the sidebar
-  st.sidebar.write("If you buy", shirt, "for", shirt_price, "eth, your account balance will be", new_balance, ".")
-  get_shirts()
-else:
-  st.sidebar.write("With a balance of", ether, "ether, you can't buy", shirt, "for", shirt_price, "eth." )
-  get_shirts()
+#  st.sidebar.write("If you buy", shirt, "for", shirt_price, "eth, your account balance will be", new_balance, ".")
+#  get_shirts()
+#else:
+#  st.sidebar.write("With a balance of", ether, "ether, you can't buy", shirt, "for", shirt_price, "eth." )
+#  get_shirts()
+
+get_shirts()
 
 purchase_button = st.sidebar.button("Purchase")
 if purchase_button:
-  purchase_item(shirt_info)
+  purchase_item(shirt_info, option)
 
 
 
