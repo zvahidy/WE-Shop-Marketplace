@@ -113,7 +113,7 @@ st.sidebar.markdown("---------")
 # Create a select box to chose a Shirt using `st.sidebar.selectbox`
 shirt = st.sidebar.selectbox('Select a Shirt', shirts)
 size = st.sidebar.selectbox ('Select a Size',['S','M','L'])
-
+quantity = st.sidebar.number_input("Qty:")
 #  Create a header using ` st.sidebar.markdown()` to display Shirt name and price.
 st.sidebar.markdown("## Shirt Name and Price")
 
@@ -124,8 +124,9 @@ shirt_info = engine.fetchall()[0]
 
 #shirt = we_shop_database[shirt][1]
 
-# Create a variable called `Shirt_price` to retrive the cat price from the `WE_database` using block notation.
-shirt_price = shirt_info[2]
+# Create a variable called `Shirt_price` to retrive the shirt price from the `WE_database` using block notation.
+#shirt_price = shirt_info[2]
+shirt_price = shirt_info[2] * quantity
 
 # Use a conditional statement using the `if` keyword to check if the selected Shirt can be purchased. This will be done by checking the user's account balance that wishes to make the purchase.
 #if shirt_price <= ether:
