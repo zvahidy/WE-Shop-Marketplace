@@ -119,7 +119,11 @@ Once the goal amount of ETH is raised which in this illustration is 100 ETH we c
 ![](Images/metamask_refund.jpg)
 
 We further extended our Kikecoin crowdsale contract to enahance its functionality by adding OpenZeppelin  **Whitelist** contract.This will allow whitelisted participants to purchase tokens. This is useful for putting KYC / AML whitelist on-chain!
- 
+
+Below is the screenshot of our deployed WhitelistCrowdSale smart contract:
+
+![](Images/Whitelist.jpg)
+
 ## Collaborators:
 Quianna Rolston - https://github.com/qrolston
 
