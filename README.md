@@ -23,13 +23,13 @@ We will launch a crowdsale to fund Neema Project, a small nonprofit in Kenya tha
 
 
 
-### Coding the crowdsale smart cotracts
+### Coding the crowdsale smart contracts
 
 We have created and compiled 3 smart contracts for ths crowdsale:
 
 1. KikeCoin:This cntract is responsible for creating our KikeCoin token.Initial supply is 0, tokens will be minted as funds are raised.This can be varified by clicking the totalsupply button of the contract.
 
-2. KikeCoinCrowdsale:This contract allows us to buy tokens,check balance, finalize the crowdsale, goal reached and cliaim refunds among other functionality.
+2. KikeCoinCrowdsale:This contract allows us to buy tokens,check balance, finalize the crowdsale, goal reached and cliaim refunds among other functionality. It distributes tokens after the crowdsale has finished, letting users call withdrawTokens in order to claim the tokens they’ve purchased.
 
 3. KikeCoinCrowdsaleDeployer:This contract is a helper contract to setup, configure and deploy our KikeCoin and KikeCoinCrowdsale contracts.It creates two contract addresses: 1 for the token address and another for the token sale address that used to deploy both the contracts.
 
@@ -79,6 +79,8 @@ Below are the screenshots of the deployed smart contracts:
 
 * To buy tokens, input the amount of tokens that you want to buy in the "Value" field of Solidity (Note that we have a 1:1 exchange rate of ETH to KC token), then put the wallet address of the token buyer in the buyToken field of the KikeCoin sale contract.Make sure to connect this account with Metamask. See video below:
 
+[](Images/Buy_Token.mov)
+
 
 Below you can see the successful transaction hash along with the confirmation from MetaMask. You can also view this yourself in Ganache.
 
@@ -89,7 +91,7 @@ Below is a screenshot of our target account's balance. We can see that the targe
 
 ![](Images/Token_Balance.jpg)
 
-## To reach the target goal we made some more trasaction. 
+## To reach the target goal we made some more trasactions from different accounts. 
 
 ![](Images/Transaction_varification.jpg)
 
@@ -101,10 +103,23 @@ Below is a screenshot of our target account's balance. We can see that the targe
 
 ![](Images/cap_reached.jpg)
 
+## Finalizing the Crowdsale and Getting Refunds
 
+Once the goal amount of ETH is raised which in this illustration is 100 ETH we can use the finalize function to close the crowdsale. Using the ``isOpen`` function which returns a True/False statement, we can check whether the crowdsale is open or closed. The finalize function will only work once the crowdsale is closed. The screenshot below shows that our crowdsale has been finalized.
 
+![](Images/finalize.jpg)
+![](Images/Finlized_crowdsale.jpg)
 
+ If the goal is not reached anyone who has bought tokens can also use the ``claimRefund`` function to refund their ETH.
 
+![](Images/claim.jpg)
+
+![](Images/claim_refund.jpg)
+
+![](Images/metamask_refund.jpg)
+
+We further extended our Kikecoin crowdsale contract to enahance its functionality by adding OpenZeppelin  **Whitelist** contract.This will allow whitelisted participants to purchase tokens. This is useful for putting KYC / AML whitelist on-chain!
+ 
 ## Collaborators:
 Quianna Rolston - https://github.com/qrolston
 
