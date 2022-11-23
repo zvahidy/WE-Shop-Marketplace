@@ -3,7 +3,13 @@
 ## WE Stand Together For Women Empowerment! 
 
 ### Project Overview:
-We will be creating a decentralized marketplace where users will be able to buy, sell, and auction items. 
+We will be creating a decentralized online marketplace on the blockchain where users will be able to buy, sell, and auction items. Our blockchain-based online market will solve a lot of problems that comes with traditional marketplaces:
+* It has a decentralized distributed database, and all nodes are involved in maintaining the database. Each has a full record of the database. There’s no central server for hackers to destroy;
+* It‘s a peer-to-peer (P2P) network, hence sellers can directly transact with buyers without intermediaries;
+* T&Cs are coded in immutable smart contracts; besides they are transparent;
+* The payment process uses cryptocurrencies thus eliminating third-party payment providers;
+* Cryptographic hash functions, data encryption, and blockchain consensus algorithm make the system secure.
+
 
 This marketplace will be value-centered - all purchases and items will contribute to women’s charities both here and abroad - https://www.neemaproject.org/
 
@@ -19,7 +25,8 @@ We will launch a crowdsale to fund Neema Project, a small nonprofit in Kenya tha
 * Presentation: Canva deck followed by Streamlit and crowdsale contract demo
 * Development tools: Remix IDE, Jupyter Notebook, Visual Studio
 
-* Blockchain tools: Ganache, Metamask,Open Zeppelin(ERC20,ERC20Detailed,ERC20Mintable, CappedCrowdsale, TimedCrowdsal, RefundablePostDeliveryCrowdsale)
+* Blockchain tools: Ganache, Metamask, OpenZeppelin(ERC20, ERC20Detailed,
+     ERC20Mintable, CappedCrowdsale, TimedCrowdsal, RefundablePostDeliveryCrowdsale, WhitelistCrowdsale)
 
 
 
@@ -27,7 +34,7 @@ We will launch a crowdsale to fund Neema Project, a small nonprofit in Kenya tha
 
 We have created and compiled 3 smart contracts for ths crowdsale:
 
-1. KikeCoin:This cntract is responsible for creating our KikeCoin token.Initial supply is 0, tokens will be minted as funds are raised.This can be varified by clicking the totalsupply button of the contract.
+1. KikeCoin:This cntract is responsible for creating our KikeCoin token.Initial supply is 0, tokens will be minted as funds are raised.This can be varified by clicking the `totalsupply` button of the contract.
 
 2. KikeCoinCrowdsale:This contract allows us to buy tokens,check balance, finalize the crowdsale, goal reached and cliaim refunds among other functionality. It distributes tokens after the crowdsale has finished, letting users call withdrawTokens in order to claim the tokens they’ve purchased.
 
@@ -77,7 +84,7 @@ Below are the screenshots of the deployed smart contracts:
 
 * You will need some ETH first. You can get it from Ganache.
 
-* To buy tokens, input the amount of tokens that you want to buy in the "Value" field of Solidity (Note that we have a 1:1 exchange rate of ETH to KC token), then put the wallet address of the token buyer in the buyToken field of the KikeCoin sale contract.Make sure to connect this account with Metamask. See video below:
+* To buy tokens, input the amount of tokens that you want to buy in the `Value` field of Solidity (Note that we have a 1:1 exchange rate of ETH to KC token), then put the wallet address of the token buyer in the buyToken field of the KikeCoin sale contract.Make sure to connect this account with Metamask. See video below:
 
 [](Images/Buy_Token.mov)
 
@@ -109,6 +116,15 @@ Once the goal amount of ETH is raised which in this illustration is 100 ETH we c
 
 ![](Images/finalize.jpg)
 ![](Images/Finlized_crowdsale.jpg)
+
+### View your tokens in MetaMask
+
+![](Images/AddedToken.jpg)
+
+Furthermore, donors can withdraw their token by using the `withdraw Token` function which they can use on our marketplace and get a gift. All proceed will be donated to the **NEEMA PROJECT**.
+
+![](Images/WithdrawToken.jpg)
+
 
  If the goal is not reached anyone who has bought tokens can also use the ``claimRefund`` function to refund their ETH.
 
