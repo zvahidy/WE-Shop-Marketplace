@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}    
+    <div class="carousel1 glide">
+        <h2 style="font-family: Trattatello;"> Tee-shirts </h2>
+        <div data-glide-el="track" class="images glide__track">
+            <ul class="glide__slides">
+                {% for item in data['img_data'] %}
+                <li class="glide__slide">
+                    <div class="card">
+                        <img class="card-img-top" src={{item[3]}}>
+                        <div class="card-body">
+                            <p class="card-text">{{item[1]}}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+              </ul>
+        </div>
+        <div data-glide-el="controls" class="glide__arrows">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                  </svg>
+            </button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+            </button>
+        </div>
+    </div>
+    <div class="carousel2 glide">
+        <h2 style="font-family: Trattatello;"> Stationery </h2>
+        <div data-glide-el="track" class="images glide__track">
+            <ul class="glide__slides">
+                {% for item in data['stationery_data'] %}
+                <li class="glide__slide">
+                    <div class="card">
+                        <img class="card-img-top" src={{item[3]}}>
+                        <div class="card-body">
+                            <p class="card-text">{{item[1]}}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+              </ul>
+        </div>
+        <div data-glide-el="controls" class="glide__arrows">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                  </svg>
+            </button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+            </button>
+        </div>
+    </div>
+    <div style="padding: 1%;">
+        <h2 style="font-family: Trattatello;"> Purchase </h2>
+        <form method="post" class="dropdown">
+            {{form.purchaser.label}}
+            <br>
+            {{form.purchaser}}
+            <br>
+            <br>
+            {{form.item_type.label}}
+            <br>
+            {{form.item_type}}
+            <br>
+            <br>
+            {{form.item.label}}
+            <br>
+            {{form.item}}
+            <br>
+            <br>    
+            {{form.quantity.label}}
+            <br>
+            {{form.quantity}}
+            <br>
+            <br>        
+            {{form.submit}}
+            {% if test_var == 0 %} 
+                {{super()}}
+            {% elif test_var == 1 %} 
+                <p> You have successfully completed your payment. Thank you for purchasing with us.</p>
+            {% else %} 
+                <p>Unfortunately your purchase didn't go through. </p>
+                <p>Please try again later. sad face :(</p>
+            {% endif %}
+        </form>      
+    </div>
+      <script>
+        new Glide('.carousel1',{type: 'carousel',perView: 4}).mount()
+        new Glide('.carousel2',{type: 'carousel',perView: 4}).mount()
+    </script>
+{% endblock %}
