@@ -18,23 +18,76 @@ We will launch a crowdsale to fund Neema Project, a small nonprofit in Kenya tha
 ## Tech Stack:
 * Version control: Github, Google Docs 
 
-* Front-end and Deployment: Streamlit (initial) Changed to Flask and Bootstrap
+* Front-end and Deployment: Streamlit (initial) Changed to Flask and Bootstrap (see Final Code folder)
 
 * Programming Languages: Python, Solidity, HTML
 
-* Presentation: Canva deck followed by Streamlit and crowdsale contract demo
+* Presentation: Canva deck followed by Flask and crowdsale contract demo
 * Development tools: Remix IDE, Jupyter Notebook, Visual Studio
 
 * Blockchain tools: Ganache, Metamask, OpenZeppelin(ERC20, ERC20Detailed,
      ERC20Mintable, CappedCrowdsale, TimedCrowdsal, RefundablePostDeliveryCrowdsale, WhitelistCrowdsale)
 
+### Front-end Deployment 
+We created a marketplace to purchase item by importing our Python code in Visual Studio into Streamlit. We modularized our code by creating a digital wallet and connecting an Etherum Account from Gnache using a seed phrase set in a .env file. The following imports were needed:
+- import os
+- import requests
+- from dotenv import load_dotenv
+- load_dotenv('.env')
+- from bip44 import Wallet
+- from web3 import Account
+- from web3 import middleware
+- from web3.gas_strategies.time_based import medium_gas_price_strategy
+- from web3 import Web3
 
+Our wallet functionality also included a conversion from Wei to Ether.
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/wallet_functionality.jpg?raw=true)
 
+Our WE_shop.py file utilized the following imports to run our Streamlit code:
+- import streamlit as st
+- from dataclasses import dataclass
+- from typing import Any, List
+- from crypto_wallet import w3, generate_account, get_balance
+
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/streamlit_code.jpg?raw=true)
+
+Here is a demo when utilizing the command "Streamlit run WE_shop.py" : 
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/Streamlit%20WE%20Shop.gif?raw=true)
+
+Ultimately although we were able to integrate a functioning wallet with our marketplace, the Streamlit app lacked the visual look we wanted for our market place. Opensea.io was an inspiration of the look we wanted, specifically the carousel feature to veiw items for sale on our marketplace and so we began to create another app utilzing Flask and Bootstrap. This required our code to be in python and HTML. We created a seperate repository. We have merged that code into this repository under the "Final Code" folder.
+
+The following Imports were required:
+- from flask import Flask, render_template, request, url_for
+- import sqlite3
+- from dataclasses import dataclass
+- from typing import Any, List
+- from web3 import Web3
+- from pathlib import Path
+- from dotenv import load_dotenv
+- import os
+- import json
+- from flask_wtf import FlaskForm
+- from wtforms import SelectField, SubmitField, IntegerField
+
+New tech was used during the transition from Streamlit to Flask which included SQLite3:
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/sqlite3.jpg?raw=true)
+
+HTML code showcasing the glide feature that produced the carousel on our Flask app:
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/HTML_VSCode.jpg?raw=true)
+
+HTML code ethat allowed us to create a second page for our Token purchase for our Crowdsale:
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/token.html.jpg?raw=true)
+
+Here is a demo of when running the command "flask run" : 
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/WE_shop_demo3.gif?raw=true)
+
+Here is a demo of utilizing token.html for displaying page 2, Token Page:
+![](https://github.com/zvahidy/WE-Shop-Marketplace/blob/main/Images/WE_shop_demo4.gif?raw=true)
 ### Coding the crowdsale smart contracts
 
 We have created and compiled 3 smart contracts for ths crowdsale:
 
-1. KikeCoin:This cntract is responsible for creating our KikeCoin token.Initial supply is 0, tokens will be minted as funds are raised.This can be varified by clicking the `totalsupply` button of the contract.
+1. KikeCoin:This contract is responsible for creating our KikeCoin token. Initial supply is 0, tokens will be minted as funds are raised.This can be verified by clicking the `totalsupply` button of the contract.
 
 2. KikeCoinCrowdsale:This contract allows us to buy tokens,check balance, finalize the crowdsale, goal reached and cliaim refunds among other functionality. It distributes tokens after the crowdsale has finished, letting users call withdrawTokens in order to claim the tokens they’ve purchased.
 
