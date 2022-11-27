@@ -18,9 +18,9 @@ We will launch a crowdsale to fund Neema Project, a small nonprofit in Kenya tha
 ## Tech Stack:
 * Version control: Github, Google Docs 
 
-* Front-end and Deployment: Streamlit
+* Front-end and Deployment: Streamlit (initial) Changed to Flask and Bootstrap
 
-* Programming Languages: Python, Solidity
+* Programming Languages: Python, Solidity, HTML
 
 * Presentation: Canva deck followed by Streamlit and crowdsale contract demo
 * Development tools: Remix IDE, Jupyter Notebook, Visual Studio
