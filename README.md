@@ -142,6 +142,10 @@ Below are the screenshots of the deployed smart contracts:
 [](Images/Buy_Token.mov)
 
 
+https://user-images.githubusercontent.com/78903233/204174225-7a7227dc-ea99-4f22-8df5-8721969d30ec.mov
+
+
+
 Below you can see the successful transaction hash along with the confirmation from MetaMask. You can also view this yourself in Ganache.
 
 ![](Images/Ganache_bal.jpg)
